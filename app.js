@@ -1,32 +1,41 @@
-const { Sequelize } = require('sequelize');
+//Importação dos módulos
+const express = require('express');
+const app = express();
+const handlebars = require('express-handlebars');
+var bodyParser = require('body-parser');
+const alunos = require('./models/Alunos');
 
-const sequelize = new Sequelize('alunos', 'root', '$Dvc314900*', {
-  host: 'localhost',
-  dialect: 'mysql'
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//Template
+app.engine('handlebars', handlebars.engine({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+
+//Rotas
+app.get('/', (req, res)=>{
+  res.send('ESCOLA FONTE DO SABER');
 });
 
-sequelize.authenticate().then(function(){
-  console.log('Conexão realizada com sucesso!');
-}).catch(function(err){
-  console.log('Falha ao conectar com banco de dados: ' + err);
+app.get('/alunos', (req, res)=>{
+  res.render('alunos');
+});
+
+app.post('/alunos', (req, res)=>{
+  alunos.create({
+    matricula: req.body.matricula,
+    nome: req.body.nome,
+    email: req.body.email
+  }).then(function(){
+    res.send("Aluno cadastrado com sucesso");
+  }).catch(function(err){
+    res.send('Erro: aluno não foi cadastrado!' + err);
+  });
 });
 
 
-const Turma = sequelize.define('Turma', {
-  codigo_turma: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-    quantidade_alunos: {
-    type: Sequelize.INTEGER,
-  },
-    responsavel: {
-    type: Sequelize.STRING,
-  },
+//Porta que está sendo 'escutada'
+app.listen(3030, ()=>{
+  console.log('Servidor rodando na url http://localhost:3030');
 });
-
-Turma.sync( {force: true});
-
-
-//console.log(User === sequelize.models.User); 
-

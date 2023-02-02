@@ -1,0 +1,19 @@
+<h1 class="bg-border container text-center">Lista de alunos</h1>
+
+<form action="/alunos" class="bg-secondary border container p-3" method="post">
+     <div class="row">
+          <div class="col-xl-2 mb-3">
+               <label class="form-label text-white">Matrícula</label>
+               <input class="form-control" name="matricula" type="number">
+          </div>
+          <div class="col-xl-5 mb-3">
+               <label class="form-label text-white">Nome do aluno</label>
+               <input class="form-control" name="nome" type="text">
+          </div>
+          <div class="col-xl-5 mb-3">
+               <label class="form-label text-white">E-mail</label>
+               <input class="form-control" name="email" type="email">
+          </div>
+     </div>
+     <button type="submit" class="btn btn-success">Cadastrar</button>
+</form>
