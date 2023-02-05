@@ -19,9 +19,10 @@ app.get('/', (req, res)=>{
 });
 
 app.get('/alunos', (req, res)=>{
-  res.render('alunos');
+  res.render('Lista de alunos');
 });
 
+//Cadastro de alunos
 app.post('/alunos', (req, res)=>{
   alunos.create({
     matricula: req.body.matricula,
